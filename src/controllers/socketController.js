@@ -1,5 +1,6 @@
 import addRoom from "./roomControllers/addRoom.js";
 import joinRoom from "./roomControllers/joinRoom.js";
+import leaveRoom from "./roomControllers/leaveRoom.js";
 
 const configureSocket = (io, socket) => {
   socket.on("test", (data) => io.emit("test:res", data));
@@ -8,7 +9,7 @@ const configureSocket = (io, socket) => {
   socket.on("message:send", ({ message, user, roomId }) =>
     io.to(roomId).emit("message:receive", {message, user})
   );
-  socket.on("user:leaveRoom", (room) => socket.emit("user:left", room));
+  socket.on("user:leaveRoom", (data) => leaveRoom(io, socket, data));
 };
 
 export default configureSocket;
