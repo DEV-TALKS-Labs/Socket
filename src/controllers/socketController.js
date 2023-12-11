@@ -10,6 +10,7 @@ const configureSocket = (io, socket) => {
     io.to(roomId).emit("message:receive", {message, user})
   );
   socket.on("user:leaveRoom", (data) => leaveRoom(io, socket, data));
+  socket.on("user:newPeer", ({roomId, userId}) => io.to(roomId).emit("user:peerConnected", userId));
 };
 
 export default configureSocket;

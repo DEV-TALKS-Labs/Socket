@@ -5,7 +5,6 @@ dotevn.config();
 const API_URL = process.env.API_URL;
 
 const addRoom = async (io, socket, data) => {
-  
   try {
     const res = await axios.post(API_URL + "rooms", data.room, data.headers);
     if (res.status === 201) {
