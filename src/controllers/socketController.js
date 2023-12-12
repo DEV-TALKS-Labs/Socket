@@ -16,6 +16,9 @@ const configureSocket = (io, socket) => {
   socket.on("user:newPeer", ({ roomId, userId }) =>
     io.to(roomId).emit("user:peerConnected", userId)
   );
+  socket.on("peer:toggleAudio", ({ roomId, streamId, muted }) =>
+    socket.broadcast.to(roomId).emit("peer:toggleAudio", streamId, muted)
+  );
 };
 
 export default configureSocket;
