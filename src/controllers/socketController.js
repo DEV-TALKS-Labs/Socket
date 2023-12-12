@@ -7,10 +7,15 @@ const configureSocket = (io, socket) => {
   socket.on("room:add", (room) => addRoom(io, socket, room));
   socket.on("user:joinRoom", (room) => joinRoom(io, socket, room));
   socket.on("message:send", ({ message, user, roomId }) =>
-    io.to(roomId).emit("message:receive", {message, user})
+    io.to(roomId).emit("message:receive", { message, user })
+  );
+  socket.on("peer:leave", ({ roomId, streamId }) =>
+    io.to(roomId).emit("user:peerDisconnected", streamId)
   );
   socket.on("user:leaveRoom", (data) => leaveRoom(io, socket, data));
-  socket.on("user:newPeer", ({roomId, userId}) => io.to(roomId).emit("user:peerConnected", userId));
+  socket.on("user:newPeer", ({ roomId, userId }) =>
+    io.to(roomId).emit("user:peerConnected", userId)
+  );
 };
 
 export default configureSocket;
